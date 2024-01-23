@@ -203,36 +203,48 @@ reload(amount) {
       //      console.log(list) // prints ["a"]
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
-      constructor(...antNames) {
-    this.ants = antNames.map(name => ({ name, health: 100 }));
+      
+  constructor(...antNames) {
+    this.ants = antNames.map(name => {
+      return {
+        name: name,
+        health: 100
+      }
+    });
+    
   }
 
   work() {
-    if (this.ants.length === 0) {
+  if(this.ants.length === 0) {
       return "No ants here. Did you work them to death?";
-    }
-
-    this.ants.forEach(ant => {
+    }  
+    this.ants = this.ants.map(ant => {
       ant.health -= 20;
-      if (ant.health <= 0) {
-        this.ants = this.ants.filter(a => a !== ant);
-      }
-    });
-
-    return `${this.ants.length} ants starting work!`;
+      
+        return ant;
+     });
+     let anter = this.ants.length
+  this.ants = this.ants.filter(ant =>{
+    return ant.health > 0})
+  
+    return `${anter} ants starting work!`;
   }
 
   feed(antName) {
-    const ant = this.ants.find(ant => ant.name === antName);
+    let counter = 0
+    this.ants= this.ants.map(ant=>{
+      if(ant.name === antName){
+        counter++
+        ant.health += 15
+        
 
-    if (ant) {
-      ant.health += 15;
-      return "Yum!";
-    } else {
-      return `${antName} not found!`;
-    }
+      }
+      return ant
+    })
+    return counter ? "Yum!" : `${antName} not found!`
   }
 }
+
       
     // 🧪 TESTS, do not make any changes below this line ===================
     // 🧪 TESTS, do not make any changes below this line ===================
